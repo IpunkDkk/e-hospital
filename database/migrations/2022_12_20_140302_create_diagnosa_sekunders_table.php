@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('diagnosa_sekunders', function (Blueprint $table) {
             $table->id();
-            $table->string('kode')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger("rekam-medik-id");
+            $table->string("diagnosa");
+            $table->string("keterangan")->nullable();
+
+            $table->foreign("rekam-medik-id")->on("rekam_mediks")->references("id")->onUpdate("cascade");
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('diagnosa_sekunders');
     }
 };

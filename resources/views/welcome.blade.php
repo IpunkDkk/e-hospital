@@ -19,6 +19,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+        @vite('resources/css/app.css')
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
@@ -128,5 +129,15 @@
                 </div>
             </div>
         </div>
+    @vite('resources/js/app.js')
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            //do work
+            Echo.channel('test-channel')
+                .listen('IotEvent', (e) => {
+                    console.log(e);
+                });
+        });
+    </script>
     </body>
 </html>
