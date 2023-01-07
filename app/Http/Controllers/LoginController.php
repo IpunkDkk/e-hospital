@@ -22,4 +22,13 @@ class LoginController extends Controller
         }
         return response("login gagal");
     }
+    public function logout(Request $request){
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

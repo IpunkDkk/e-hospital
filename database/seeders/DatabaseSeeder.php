@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             UserRolePermissionSeeder::class,
             ProfileSeeder::class,
             NavigationSeeder::class,
+            RekamMedikSeeder::class,
         ]);
     }
 }

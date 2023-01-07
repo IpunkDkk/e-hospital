@@ -36,5 +36,17 @@ class NavigationSeeder extends Seeder
             'url' => 'konfigurasi/users',
             'icon' => '',
         ]);
+
+        $rekamMedis = Navigation::create([
+            'name' => 'Rekam Medis',
+            'url' => 'rekam-medis',
+            'icon' => 'ti-notepad',
+            'main_menu' => null
+        ]);
+        $rekamMedis->subMenus()->create([
+            'name' => 'Pasien',
+            'url' => 'rekam-medis/pasien',
+            'icon' => ''
+        ]);
     }
 }

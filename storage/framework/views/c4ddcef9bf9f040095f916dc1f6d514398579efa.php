@@ -18,7 +18,7 @@
     <div class="sidebar-content">
         <ul>
             <li class="<?php echo e(request()->segment(1) == 'dashboard' ? 'active' : ''); ?>">
-                <a href="#" class="link">
+                <a href="<?php echo e(route('dashboard')); ?>" class="link">
                     <i class="ti-home"></i>
                     <span>Dashboard</span>
                 </a>

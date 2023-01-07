@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -19,15 +20,33 @@ class UserRolePermissionSeeder extends Seeder
     public function run()
     {
         $administrator = User::create([
-            "email" => "admin@email.com",
+            "email" => "sysadmin@email.com",
             "password" => Hash::make('admin')
         ]);
 
+        $administrasi = User::create([
+            'email' => 'admin@email.com',
+            'password' => Hash::make('admin')
+        ]);
+
+        $pasien = User::create([
+            'email' => 'pasien@email.com',
+            'kode' => '1bb91921',
+            'password' => Hash::make('pasien')
+        ]);
+
+        $dokter = User::create([
+            'email' => 'dokter@email.com',
+            'kode' => Str::random(8),
+            'password' => Hash::make('dokter')
+        ]);
+
         $sysadmin = Role::create(['name' => 'Super Admin']);
+        $admin = Role::create(['name' => 'Administrasi Medik']);
+        $pasienrole = Role::create(['name' => 'Pasien']);
+        $dokterrole = Role::create(['name' => 'Dokter']);
+
         Permission::create(['name' => 'read konfigurasi']);
-
-
-
         Permission::create(['name' => 'read konfigurasi/roles']);
         Permission::create(['name' => 'update konfigurasi/roles']);
         Permission::create(['name' => 'create konfigurasi/roles']);
@@ -42,6 +61,12 @@ class UserRolePermissionSeeder extends Seeder
         Permission::create(['name' => 'update konfigurasi/users']);
         Permission::create(['name' => 'create konfigurasi/users']);
         Permission::create(['name' => 'delete konfigurasi/users']);
+
+        Permission::create(['name' => 'read rekam-medis']);
+        Permission::create(['name' => 'read rekam-medis/pasien']);
+        Permission::create(['name' => 'update rekam-medis/pasien']);
+        Permission::create(['name' => 'create rekam-medis/pasien']);
+        Permission::create(['name' => 'delete rekam-medis/pasien']);
 
         $sysadmin->givePermissionTo([
             'read konfigurasi/roles',
@@ -61,6 +86,20 @@ class UserRolePermissionSeeder extends Seeder
 
             'read konfigurasi',
         ]);
+        $admin->givePermissionTo([
+            'read rekam-medis',
+            'read rekam-medis/pasien',
+            'create rekam-medis/pasien',
+            'update rekam-medis/pasien',
+            'delete rekam-medis/pasien',
+        ]);
+        $dokterrole->givePermissionTo([
+            'read rekam-medis',
+            'read rekam-medis/pasien',
+        ]);
         $administrator->assignRole('Super Admin');
+        $administrasi->assignRole('Administrasi Medik');
+        $pasien->assignRole('Pasien');
+        $dokter->assignRole('Dokter');
     }
 }
